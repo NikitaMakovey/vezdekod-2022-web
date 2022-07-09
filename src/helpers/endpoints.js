@@ -9,6 +9,7 @@ const convertArrayToQueryString = (key, data) => {
 }
 
 export const GET_EMAILS = PREFIX + "/";
+export const GET_EMAILS_BY_CATEGORY = (category) => PREFIX + `/${category}`;
 export const READ_EMAIL = (id) => PREFIX + `/${id}/read`;
 export const UNREAD_EMAIL = (id) => PREFIX + `/${id}/unread`;
 export const READ_EMAILS = (ids) => PREFIX + `/read?${convertArrayToQueryString('ids', ids)}`;

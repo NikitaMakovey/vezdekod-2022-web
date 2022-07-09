@@ -11,15 +11,18 @@ import {
     Header,
     Group,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    Link
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import {GET_EMAILS, READ_EMAILS, UNREAD_EMAILS} from "../helpers/endpoints";
+import EmailsList from "../components/EmailsList";
+import { GET_EMAILS_BY_CATEGORY, READ_EMAILS, UNREAD_EMAILS } from "../helpers/endpoints";
 import random from "../helpers/random";
-import {Icon16CheckCircle} from "@vkontakte/icons";
-import CategoryEmailsList from "../components/CategoryEmailsList";
+import { Icon16CheckCircle, Icon24ArrowLeftOutline } from "@vkontakte/icons";
+import { useParams } from "react-router-dom";
 
-export default function Main() {
+export default function Category() {
+    const { category } = useParams();
     const { viewWidth } = useAdaptivity();
 
     const [error, setError] = useState(null);
@@ -27,18 +30,6 @@ export default function Main() {
     const [items, setItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
     const [emailsListKey, setEmailsListKey] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const [activeCategories, setActiveCategories] = useState([]);
-
-    const updateActiveCategories = (category) => {
-        if (activeCategories.includes(category)) {
-            const updatedActiveCategories = activeCategories.filter(o => o !== category);
-            setActiveCategories(updatedActiveCategories);
-        } else {
-            const updatedActiveCategories = [...activeCategories, category];
-            setActiveCategories(updatedActiveCategories);
-        }
-    }
 
     const updateCheckedItems = (data) => {
         setCheckedItems(data);
@@ -95,23 +86,18 @@ export default function Main() {
     }
 
     useEffect(() => {
-        fetch(`${GET_EMAILS}?id=${random()}`)
+        fetch(`${GET_EMAILS_BY_CATEGORY(category)}?id=${random()}`)
             .then(res => res.json())
             .then((result) => {
                     setIsLoaded(true);
-                    let data = [];
-                    Object.values(result.categories).forEach(categoryData => {
-                        data = [...data, ...categoryData];
-                    });
-                    setCategories(Object.keys(result.categories));
-                    setItems(data);
+                    setItems(result);
                 },
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
                 }
             )
-    }, [])
+    }, [category])
 
     return (
         <AppRoot>
@@ -142,32 +128,28 @@ export default function Main() {
                                         </ButtonGroup>
                                     </PanelHeader>
                                 ) : (
-                                    <PanelHeader>SOFT SQUAD Почта</PanelHeader>
+                                    <PanelHeader>
+                                        <Link to="/" style={{marginRight: "1rem"}}>
+                                            <Icon24ArrowLeftOutline/>
+                                        </Link>
+                                        <span>SOFT SQUAD Почта</span>
+                                    </PanelHeader>
                                 )
                             }
                             {
                                 error ? (
-                                    <div>Error: {error.message}</div>
-                                ) :
+                                        <div>Error: {error.message}</div>
+                                    ) :
                                     !isLoaded ? (
                                         <div>Loading...</div>
                                     ) : (
                                         <Group header={<Header mode="secondary">Письма</Header>}>
-                                            {
-                                                categories.map(category => {
-                                                    return (
-                                                        <CategoryEmailsList
-                                                            category={category}
-                                                            updateCheckedItems={updateCheckedItems}
-                                                            updateActiveCategories={updateActiveCategories}
-                                                            checkedItems={checkedItems}
-                                                            items={items}
-                                                            active={activeCategories.includes(category)}
-                                                            key={`${emailsListKey}-${category}`}
-                                                        />
-                                                    )
-                                                })
-                                            }
+                                            <EmailsList
+                                                items={items}
+                                                updateCheckedItems={updateCheckedItems}
+                                                checkedItems={checkedItems}
+                                                key={emailsListKey}
+                                            />
                                         </Group>
                                     )
                             }

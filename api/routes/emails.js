@@ -26,7 +26,7 @@ router.get('/', function(request, response, next) {
     response.status(200).json(data);
 });
 
-router.get('/:category', function(request, response, next) {
+router.get('/categories/:category', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
     items = items
         .filter(o => o.category === request.params.category)

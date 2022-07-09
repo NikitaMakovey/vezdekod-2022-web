@@ -395,7 +395,7 @@
         "flag": false,
         "confidence": true,
         "finance": false,
-        "read": false,
+        "read": true,
         "id": "62c9cdc00acb6",
         "category": "social"
     },
@@ -413,7 +413,7 @@
         "flag": true,
         "confidence": false,
         "finance": true,
-        "read": false,
+        "read": true,
         "id": "62c9cdc00acec",
         "category": "social"
     },
@@ -617,7 +617,7 @@
         "flag": true,
         "confidence": false,
         "finance": true,
-        "read": false,
+        "read": true,
         "id": "62c9cdc00af0c",
         "category": "social"
     },

@@ -18,7 +18,7 @@ function App() {
             <ConfigProvider>
                 <AdaptivityProvider>
                     <Routes>
-                        <Route path="/:category" element={<Category />} />
+                        <Route path="/categories/:category" element={<Category />} />
                         <Route path="/" element={<Main />} />
                     </Routes>
                 </AdaptivityProvider>

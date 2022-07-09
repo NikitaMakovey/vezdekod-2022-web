@@ -19,9 +19,10 @@ import EmailsList from "../components/EmailsList";
 import { GET_EMAILS_BY_CATEGORY, READ_EMAILS, UNREAD_EMAILS } from "../helpers/endpoints";
 import random from "../helpers/random";
 import { Icon16CheckCircle, Icon24ArrowLeftOutline } from "@vkontakte/icons";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Category() {
+    const navigate = useNavigate();
     const { category } = useParams();
     const { viewWidth } = useAdaptivity();
 
@@ -129,7 +130,7 @@ export default function Category() {
                                     </PanelHeader>
                                 ) : (
                                     <PanelHeader>
-                                        <Link to="/" style={{marginRight: "1rem"}}>
+                                        <Link onClick={() => navigate(-1)} style={{marginRight: "1rem"}}>
                                             <Icon24ArrowLeftOutline/>
                                         </Link>
                                         <span>SOFT SQUAD Почта</span>

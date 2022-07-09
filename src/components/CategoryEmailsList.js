@@ -1,7 +1,7 @@
 import {RichCell, SimpleCell} from "@vkontakte/vkui";
 import EmailsList from "./EmailsList";
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./CategoryEmailsList.scss";
 
@@ -27,7 +27,7 @@ export default function CategoryEmailsList({ category, active, updateActiveCateg
                             checkedItems={checkedItems}
                         />
                         <SimpleCell className="simple-cell--center">
-                            <Link to={`/${category}`}>Перейти в папку «{CATEGORIES[category]}»</Link>
+                            <Link to={`/categories/${category}`}>Перейти в папку «{CATEGORIES[category]}»</Link>
                         </SimpleCell>
                     </>
                 )

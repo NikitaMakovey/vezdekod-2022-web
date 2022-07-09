@@ -23,6 +23,7 @@ export default function Main() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState([]);
+    const [emailsListKey, setEmailsListKey] = useState(null);
 
     const updateCheckedItems = (items) => {
         setCheckedItems(items);
@@ -41,6 +42,7 @@ export default function Main() {
                     return item;
                 }));
                 setCheckedItems([]);
+                setEmailsListKey(random());
             }
         } catch (error) {
             console.error(error);
@@ -60,6 +62,7 @@ export default function Main() {
                     return item;
                 }));
                 setCheckedItems([]);
+                setEmailsListKey(random());
             }
         } catch (error) {
             console.error(error);
@@ -106,7 +109,11 @@ export default function Main() {
                                         <div>Loading...</div>
                                     ) : (
                                         <Group header={<Header mode="secondary">Письма</Header>}>
-                                            <EmailsList items={items} updateCheckedItems={updateCheckedItems}/>
+                                            <EmailsList
+                                                items={items}
+                                                updateCheckedItems={updateCheckedItems}
+                                                key={emailsListKey}
+                                            />
                                         </Group>
                                     )
                             }

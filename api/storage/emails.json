@@ -76,7 +76,7 @@
         "read": true
     },
     {
-        "read": true,
+        "read": false,
         "id": "5",
         "author": {
             "name": "Адильгирей Шнейдеров",

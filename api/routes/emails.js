@@ -6,11 +6,7 @@ const fs = require('fs');
 const STORAGE_ENDPOINT = (request) => `${request.app.get('storage')}/emails.json`;
 
 function syncStorageData(request, data) {
-    fs.writeFile(STORAGE_ENDPOINT(request), JSON.stringify(data), error => {
-        if (error) {
-            console.error(error);
-        }
-    });
+    fs.writeFileSync(STORAGE_ENDPOINT(request), JSON.stringify(data, null, 4));
 }
 
 /* GET emails listing. */
@@ -22,7 +18,10 @@ router.get('/', function(request, response, next) {
 router.get('/:id/read', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
     const updateItems = items.map((item) => {
-        return item.id === request.params.id ? { ...item, read: true } : item;
+        if (item.id === request.params.id) {
+            item.read = true;
+        }
+        return item;
     });
     syncStorageData(request, updateItems);
     response.status(204).send('');
@@ -31,7 +30,10 @@ router.get('/:id/read', function(request, response, next) {
 router.get('/:id/unread', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
     const updateItems = items.map((item) => {
-        return item.id === request.params.id ? { ...item, read: false } : item;
+        if (item.id === request.params.id) {
+            item.read = false;
+        }
+        return item;
     });
     syncStorageData(request, updateItems);
     response.status(204).send('');
@@ -41,7 +43,10 @@ router.get('/read', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
     const ids = request.query.ids ?? [];
     const updateItems = items.map((item) => {
-        return ids.includes(item.id) ? { ...item, read: true } : item;
+        if (ids.includes(item.id)) {
+            item.read = true;
+        }
+        return item;
     });
     syncStorageData(request, updateItems);
     response.status(204).send('');
@@ -51,7 +56,10 @@ router.get('/unread', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
     const ids = request.query.ids ?? [];
     const updateItems = items.map((item) => {
-        return ids.includes(item.id) ? { ...item, read: false } : item;
+        if (ids.includes(item.id)) {
+            item.read = false;
+        }
+        return item;
     });
     syncStorageData(request, updateItems);
     response.status(204).send('');

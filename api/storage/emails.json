@@ -14,9 +14,10 @@
         "flag": true,
         "confidence": false,
         "finance": true,
-        "read": false
+        "read": true
     },
     {
+        "read": false,
         "id": "2",
         "author": {
             "name": "Карияна Замулла",
@@ -31,14 +32,13 @@
         "flag": true,
         "confidence": false,
         "finance": true,
-        "read": false,
         "file": {
             "filePath": "well.svg",
             "preview": "data:image/png;base64,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"
         }
     },
     {
-        "read": false,
+        "read": true,
         "id": "3",
         "author": {
             "name": "Мамун Гаранцев",
@@ -73,7 +73,7 @@
         "flag": false,
         "confidence": true,
         "finance": true,
-        "read": false
+        "read": true
     },
     {
         "read": true,
@@ -107,7 +107,7 @@
         "flag": false,
         "confidence": true,
         "finance": false,
-        "read": false
+        "read": true
     },
     {
         "id": "7",

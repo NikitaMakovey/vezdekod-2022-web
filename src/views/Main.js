@@ -14,6 +14,7 @@ import {
 import "@vkontakte/vkui/dist/vkui.css";
 import EmailsList from "../components/EmailsList";
 import {GET_EMAILS} from "../helpers/endpoints";
+import random from "../helpers/random";
 
 export default function Main() {
     const { viewWidth } = useAdaptivity();
@@ -23,7 +24,7 @@ export default function Main() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch(GET_EMAILS)
+        fetch(`${GET_EMAILS}?id=${random()}`)
             .then(res => res.json())
             .then((result) => {
                     setIsLoaded(true);

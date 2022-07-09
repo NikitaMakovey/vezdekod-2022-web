@@ -1,11 +1,18 @@
-import {Avatar, Checkbox, RichCell} from "@vkontakte/vkui";
+import {Avatar, Checkbox, RichCell, SimpleCell} from "@vkontakte/vkui";
 import React, {useEffect, useState} from "react";
 import "./Email.scss";
 
-import {Icon12Circle, Icon12CircleOutline, Icon16Bookmark, Icon16BookmarkOutline} from '@vkontakte/icons';
+import {
+    Icon12Circle,
+    Icon12CircleOutline,
+    Icon16Bookmark,
+    Icon16BookmarkOutline,
+    Icon20Attach, Icon20PictureOutline
+} from '@vkontakte/icons';
 import {READ_EMAIL, UNREAD_EMAIL} from "../helpers/endpoints";
+import {Dropdown} from "@vkontakte/vkui/unstable";
 
-export default function Email({ id, title, author, text, dateTime, read, flag, check = f => f, active }) {
+export default function Email({ id, title, author, text, dateTime, read, flag, file, check = f => f, active }) {
     const [item, setItem] = useState({ id, title, author, text, dateTime, read, flag });
     const [hover, setHover] = useState(false);
     const [checked, setChecked] = useState(false);
@@ -109,6 +116,39 @@ export default function Email({ id, title, author, text, dateTime, read, flag, c
                 <div className="email-body__container">
                     <span className="email__body">{text}</span>
                 </div>
+            </div>
+
+            <div className="email-secondary__container">
+                { file && (
+                    <>
+                        <Dropdown
+                            action="click"
+                            placement="left"
+                            content={
+                                <div className="email-file__dropdown">
+                                    <Dropdown
+                                        action="hover"
+                                        placement="left"
+                                        content={
+                                            <div className="email-file__dropdown">
+                                                <SimpleCell>
+                                                    <img src={file.preview} alt="#" />
+                                                </SimpleCell>
+                                            </div>
+                                        }
+                                    >
+                                        <SimpleCell>
+                                            <Icon20PictureOutline/>
+                                            <span>{file.filePath}</span>
+                                        </SimpleCell>
+                                    </Dropdown>
+                                </div>
+                            }
+                        >
+                            <Icon20Attach/>
+                        </Dropdown>
+                    </>
+                )}
             </div>
 
             <div className="email-date__container">

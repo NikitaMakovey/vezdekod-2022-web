@@ -13,7 +13,7 @@ import {
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import EmailsList from "../components/EmailsList";
-import emails from "./../resources/emails.json";
+import emails from "./../resources/emails/small.json";
 
 export default function Main() {
     const { viewWidth } = useAdaptivity();

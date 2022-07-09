@@ -1,19 +1,17 @@
 import {SimpleCell} from "@vkontakte/vkui";
 import React from "react";
 import "./Email.scss";
-import { convertDateTimeToLocalTimezone } from "../helpers/datetime";
 
 const SHORT_BODY_LENGTH = 50;
 
-export default function Email({ id, subject, sender, body, sent_at }) {
-    const shortBody = body.substring(0, SHORT_BODY_LENGTH);
-    const sentAtData = convertDateTimeToLocalTimezone(sent_at);
+export default function Email({ title, author, text, dateTime }) {
+    const shortBody = text.substring(0, SHORT_BODY_LENGTH);
     return (
-        <SimpleCell key={id} className="email-item">
-            <span className="email__sender">{sender.name}</span>
-            <span className="email__subject">{subject}</span>
+        <SimpleCell className="email-item">
+            <span className="email__sender">{author.name}</span>
+            <span className="email__subject">{title}</span>
             <span className="email__body">{shortBody}</span>
-            <span className="email__date" title={sentAtData.source}>{sentAtData.preview}</span>
+            <span className="email__date">{dateTime}</span>
         </SimpleCell>
     );
 }

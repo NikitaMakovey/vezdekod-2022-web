@@ -1,18 +1,56 @@
 import {Avatar, RichCell} from "@vkontakte/vkui";
-import React from "react";
+import React, {useState} from "react";
 import "./Email.scss";
 
-import { Icon12Circle, Icon12CircleOutline, Icon16BookmarkOutline, Icon16Bookmark } from '@vkontakte/icons';
+import {Icon12Circle, Icon12CircleOutline, Icon16Bookmark, Icon16BookmarkOutline} from '@vkontakte/icons';
+import {READ_EMAIL, UNREAD_EMAIL} from "../helpers/endpoints";
 
-export default function Email({ title, author, text, dateTime, read, flag }) {
+export default function Email({ id, title, author, text, dateTime, read, flag }) {
+    const [item, setItem] = useState({ id, title, author, text, dateTime, read, flag });
+
+    const readEmail = async() => {
+        try {
+            const response = await fetch(READ_EMAIL(id));
+            if (response.status !== 204) {
+                console.error(`Request is failed with status ${response.status}`);
+            } else {
+                setItem({ ...item, read: true });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const unreadEmail = async() => {
+        try {
+            const response = await fetch(UNREAD_EMAIL(id));
+            if (response.status !== 204) {
+                console.error(`Request is failed with status ${response.status}`);
+            } else {
+                setItem({ ...item, read: false });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <RichCell className="email-item">
             <div className="email-mark-as-read__container">
                 {
-                    read ? (
-                        <Icon12CircleOutline className="mark-as-read__item" title="Пометить непрочитанным"/>
+                    item.read ? (
+                        <Icon12CircleOutline
+                            onClick={unreadEmail}
+                            className="mark-as-read__item"
+                            title="Пометить непрочитанным"
+                        />
                     ) : (
-                        <Icon12Circle className="mark-as-read__item" title="Пометить прочитанным"/>
+                        <Icon12Circle
+                            onClick={readEmail}
+                            className="mark-as-read__item"
+                            title="Пометить прочитанным"
+                            fill="blue"
+                        />
                     )
                 }
             </div>
@@ -26,9 +64,16 @@ export default function Email({ title, author, text, dateTime, read, flag }) {
             <div className="email-flag__container">
                 {
                     flag ? (
-                        <Icon16Bookmark className="email-flag__item" fill="red" title="Снять флажок"/>
+                        <Icon16Bookmark
+                            className="email-flag__item"
+                            fill="red"
+                            title="Снять флажок"
+                        />
                     ) : (
-                        <Icon16BookmarkOutline className="email-flag__item" title="Пометить флажком"/>
+                        <Icon16BookmarkOutline
+                            className="email-flag__item"
+                            title="Пометить флажком"
+                        />
                     )
                 }
             </div>

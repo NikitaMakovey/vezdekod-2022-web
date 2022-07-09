@@ -1,0 +1,1 @@
+export const GET_EMAILS = process.env.REACT_APP_API_ENDPOINT + "/api/emails";

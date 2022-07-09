@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     useAdaptivity,
     AppRoot,
@@ -13,10 +13,28 @@ import {
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import EmailsList from "../components/EmailsList";
-import emails from "./../resources/emails/small.json";
+import {GET_EMAILS} from "../helpers/endpoints";
 
 export default function Main() {
     const { viewWidth } = useAdaptivity();
+
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetch(GET_EMAILS)
+            .then(res => res.json())
+            .then((result) => {
+                    setIsLoaded(true);
+                    setItems(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
 
     return (
         <AppRoot>
@@ -25,9 +43,18 @@ export default function Main() {
                     <View activePanel="main">
                         <Panel id="main">
                             <PanelHeader>Почта</PanelHeader>
-                            <Group header={<Header mode="secondary">Письма</Header>}>
-                                <EmailsList items={emails}/>
-                            </Group>
+                            {
+                                error ? (
+                                    <div>Error: {error.message}</div>
+                                ) :
+                                    !isLoaded ? (
+                                        <div>Loading...</div>
+                                    ) : (
+                                        <Group header={<Header mode="secondary">Письма</Header>}>
+                                            <EmailsList items={items}/>
+                                        </Group>
+                                    )
+                            }
                         </Panel>
                     </View>
                 </SplitCol>

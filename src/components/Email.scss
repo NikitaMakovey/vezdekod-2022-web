@@ -5,6 +5,7 @@
   letter-spacing: var(--vkui--font_text--letter_spacing--regular,normal);
   font-size: 15px;
   line-height: 20px;
+  display: flex;
 
   .email__sender {
     padding-right: 8px;

@@ -15,6 +15,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 import EmailsList from "../components/EmailsList";
 import {GET_EMAILS, READ_EMAILS, UNREAD_EMAILS} from "../helpers/endpoints";
 import random from "../helpers/random";
+import {Icon16CheckCircle} from "@vkontakte/icons";
 
 export default function Main() {
     const { viewWidth } = useAdaptivity();
@@ -25,8 +26,18 @@ export default function Main() {
     const [checkedItems, setCheckedItems] = useState([]);
     const [emailsListKey, setEmailsListKey] = useState(null);
 
-    const updateCheckedItems = (items) => {
-        setCheckedItems(items);
+    const updateCheckedItems = (data) => {
+        setCheckedItems(data);
+    }
+
+    const checkAllItems = () => {
+        setCheckedItems(items.map(o => o.id));
+        setEmailsListKey(random());
+    }
+
+    const uncheckAllItems = () => {
+        setCheckedItems([]);
+        setEmailsListKey(random());
     }
 
     const readCheckedEmails = async() => {
@@ -93,6 +104,20 @@ export default function Main() {
                                 checkedItems.length ? (
                                     <PanelHeader>
                                         <ButtonGroup>
+                                            {
+                                                checkedItems.length === items.length ? (
+                                                    <Button
+                                                        before={(<Icon16CheckCircle/>)}
+                                                        mode="tertiary"
+                                                        onClick={uncheckAllItems}
+                                                    >Отменить выделение</Button>
+                                                ) : (
+                                                    <Button
+                                                        mode="tertiary"
+                                                        onClick={checkAllItems}
+                                                    >Выделить все</Button>
+                                                )
+                                            }
                                             <Button onClick={readCheckedEmails}>Прочитать</Button>
                                             <Button onClick={unreadCheckedEmails}>Пометить непрочитанными</Button>
                                         </ButtonGroup>
@@ -112,6 +137,7 @@ export default function Main() {
                                             <EmailsList
                                                 items={items}
                                                 updateCheckedItems={updateCheckedItems}
+                                                checkedItems={checkedItems}
                                                 key={emailsListKey}
                                             />
                                         </Group>

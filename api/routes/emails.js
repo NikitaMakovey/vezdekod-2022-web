@@ -41,7 +41,7 @@ router.get('/:id/unread', function(request, response, next) {
 
 router.get('/read', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
-    const ids = request.query.ids ?? [];
+    const ids = request.query.ids ? Object.values(request.query.ids) : [];
     const updateItems = items.map((item) => {
         if (ids.includes(item.id)) {
             item.read = true;
@@ -54,7 +54,7 @@ router.get('/read', function(request, response, next) {
 
 router.get('/unread', function(request, response, next) {
     let items = require(STORAGE_ENDPOINT(request)); // local data storage
-    const ids = request.query.ids ?? [];
+    const ids = request.query.ids ? Object.values(request.query.ids) : [];
     const updateItems = items.map((item) => {
         if (ids.includes(item.id)) {
             item.read = false;

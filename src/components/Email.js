@@ -1,14 +1,19 @@
 import {Avatar, Checkbox, RichCell} from "@vkontakte/vkui";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Email.scss";
 
 import {Icon12Circle, Icon12CircleOutline, Icon16Bookmark, Icon16BookmarkOutline} from '@vkontakte/icons';
 import {READ_EMAIL, UNREAD_EMAIL} from "../helpers/endpoints";
 
-export default function Email({ id, title, author, text, dateTime, read, flag, check = f => f }) {
+export default function Email({ id, title, author, text, dateTime, read, flag, check = f => f, active }) {
     const [item, setItem] = useState({ id, title, author, text, dateTime, read, flag });
     const [hover, setHover] = useState(false);
     const [checked, setChecked] = useState(false);
+
+    useEffect(() => {
+        if (active) { setHover(true); }
+        setChecked(active);
+    }, [active]);
 
     const toggleHover = () => {
         if (!hover || !checked) {
@@ -69,7 +74,7 @@ export default function Email({ id, title, author, text, dateTime, read, flag, c
 
             {
                 hover ? (
-                    <Checkbox onClick={checkElement}/>
+                    <Checkbox onClick={checkElement} checked={checked}/>
                 ) : (
                     <Avatar className="email-avatar" src={author.avatar} />
                 )

@@ -1,8 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Email from "./Email";
 
-export default function EmailsList({ items, updateCheckedItems = f => f }) {
+export default function EmailsList({ items, updateCheckedItems = f => f, checkedItems }) {
     const [checked, setChecked] = useState([]);
+
+    useEffect(() => {
+        setChecked(checkedItems);
+    }, [checkedItems]);
 
     const updateChecked = (id) => {
         if (checked.includes(id)) {
@@ -19,7 +23,7 @@ export default function EmailsList({ items, updateCheckedItems = f => f }) {
     return (
         <>
             {items.map((item, key) => (
-                <Email key={key} {...item} check={updateChecked}/>
+                <Email key={key} {...item} check={updateChecked} active={checked.includes(item.id)}/>
             ))}
         </>
     );

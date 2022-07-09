@@ -1,16 +1,12 @@
-import {Avatar, SimpleCell} from "@vkontakte/vkui";
+import {Avatar, RichCell} from "@vkontakte/vkui";
 import React from "react";
 import "./Email.scss";
 
 import { Icon12Circle, Icon12CircleOutline, Icon16BookmarkOutline, Icon16Bookmark } from '@vkontakte/icons';
 
-const SHORT_BODY_LENGTH = 50;
-
 export default function Email({ title, author, text, dateTime, read, flag }) {
-    const shortBody = text.substring(0, SHORT_BODY_LENGTH);
-
     return (
-        <SimpleCell className="email-item">
+        <RichCell className="email-item">
             <div className="email-mark-as-read__container">
                 {
                     read ? (
@@ -30,25 +26,27 @@ export default function Email({ title, author, text, dateTime, read, flag }) {
             <div className="email-flag__container">
                 {
                     flag ? (
-                        <Icon16Bookmark title="Снять флажок"/>
+                        <Icon16Bookmark className="email-flag__item" fill="red" title="Снять флажок"/>
                     ) : (
-                        <Icon16BookmarkOutline title="Пометить флажком"/>
+                        <Icon16BookmarkOutline className="email-flag__item" title="Пометить флажком"/>
                     )
                 }
             </div>
 
-            <div className="email-subject__container">
-                <span className="email__subject">{title}</span>
-            </div>
+            <div className="email-text__container">
+                <div className="email-subject__container">
+                    <span className="email__subject">{title}</span>
+                </div>
 
-            <div className="email-body__container">
-                <span className="email__body">{shortBody}</span>
+                <div className="email-body__container">
+                    <span className="email__body">{text}</span>
+                </div>
             </div>
 
             <div className="email-date__container">
                 <div title={dateTime} className="email__date">{dateTime}</div>
             </div>
-        </SimpleCell>
+        </RichCell>
     );
 }
 

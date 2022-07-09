@@ -42,7 +42,7 @@ export default function Main() {
                 <SplitCol spaced={viewWidth > ViewWidth.MOBILE}>
                     <View activePanel="main">
                         <Panel id="main">
-                            <PanelHeader>Почта</PanelHeader>
+                            <PanelHeader>SOFT SQUAD Почта</PanelHeader>
                             {
                                 error ? (
                                     <div>Error: {error.message}</div>

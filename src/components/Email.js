@@ -1,12 +1,24 @@
-import {Avatar, RichCell} from "@vkontakte/vkui";
+import {Avatar, Checkbox, RichCell} from "@vkontakte/vkui";
 import React, {useState} from "react";
 import "./Email.scss";
 
 import {Icon12Circle, Icon12CircleOutline, Icon16Bookmark, Icon16BookmarkOutline} from '@vkontakte/icons';
 import {READ_EMAIL, UNREAD_EMAIL} from "../helpers/endpoints";
 
-export default function Email({ id, title, author, text, dateTime, read, flag }) {
+export default function Email({ id, title, author, text, dateTime, read, flag, check = f => f }) {
     const [item, setItem] = useState({ id, title, author, text, dateTime, read, flag });
+    const [hover, setHover] = useState(false);
+    const [checked, setChecked] = useState(false);
+
+    const toggleHover = () => {
+        if (!hover || !checked) {
+            setHover(!hover);
+        }
+    }
+    const checkElement = () => {
+        setChecked(!checked);
+        check(id);
+    }
 
     const readEmail = async() => {
         try {
@@ -35,7 +47,7 @@ export default function Email({ id, title, author, text, dateTime, read, flag })
     }
 
     return (
-        <RichCell className="email-item">
+        <RichCell className="email-item" onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
             <div className="email-mark-as-read__container">
                 {
                     item.read ? (
@@ -55,7 +67,13 @@ export default function Email({ id, title, author, text, dateTime, read, flag })
                 }
             </div>
 
-            <Avatar className="email-avatar" src={author.avatar} />
+            {
+                hover ? (
+                    <Checkbox onClick={checkElement}/>
+                ) : (
+                    <Avatar className="email-avatar" src={author.avatar} />
+                )
+            }
 
             <div className="email-sender__container">
                 <span className="sender__item" title={`${author.name} ${author.email}`}>{author.name}</span>

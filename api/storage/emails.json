@@ -17,7 +17,7 @@
         "read": true
     },
     {
-        "read": false,
+        "read": true,
         "id": "2",
         "author": {
             "name": "Карияна Замулла",
@@ -38,7 +38,7 @@
         }
     },
     {
-        "read": true,
+        "read": false,
         "id": "3",
         "author": {
             "name": "Мамун Гаранцев",

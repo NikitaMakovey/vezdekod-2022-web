@@ -31,7 +31,13 @@ router.get('/categories/:category', function(request, response, next) {
     items = items
         .filter(o => o.category === request.params.category)
         .sort((left, right) => left.dateTime > right.dateTime);
-    response.status(200).json(items);
+    const total = items.length;
+    if (request.query.limit && request.query.page) {
+        const limit = 1 * request.query.limit;
+        const page = 1 * request.query.page;
+        items = items.splice(limit * (page - 1), limit);
+    }
+    response.status(200).json({items, total});
 });
 
 router.get('/:id/read', function(request, response, next) {

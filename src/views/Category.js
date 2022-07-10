@@ -101,7 +101,9 @@ export default function Category() {
     }
 
     useEffect(() => {
-        fetch(`${GET_EMAILS_BY_CATEGORY(category)}?id=${random()}`)
+        const page = 1;
+        const max = 20;
+        fetch(`${GET_EMAILS_BY_CATEGORY(category)}?id=${random()}&page=${page}&limit=${max}`)
             .then(res => res.json())
             .then((result) => {
                     setIsLoaded(true);

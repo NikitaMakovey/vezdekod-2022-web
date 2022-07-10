@@ -1,0 +1,6 @@
+.flex {
+  display: flex;
+  & > div, img {
+    margin: 8px;
+  }
+}

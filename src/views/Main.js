@@ -126,19 +126,21 @@ export default function Main() {
                                             {
                                                 checkedItems.length === items.length ? (
                                                     <Button
+                                                        color="primary"
                                                         before={(<Icon16CheckCircle/>)}
                                                         mode="tertiary"
                                                         onClick={uncheckAllItems}
                                                     >Отменить выделение</Button>
                                                 ) : (
                                                     <Button
+                                                        color="primary"
                                                         mode="tertiary"
                                                         onClick={checkAllItems}
                                                     >Выделить все</Button>
                                                 )
                                             }
-                                            <Button onClick={readCheckedEmails}>Прочитать</Button>
-                                            <Button onClick={unreadCheckedEmails}>Пометить непрочитанными</Button>
+                                            <Button onClick={readCheckedEmails} color="primary">Прочитать</Button>
+                                            <Button onClick={unreadCheckedEmails} color="primary">Пометить непрочитанными</Button>
                                         </ButtonGroup>
                                     </PanelHeader>
                                 ) : (

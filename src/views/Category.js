@@ -34,6 +34,10 @@ export default function Category() {
     const [checkedItems, setCheckedItems] = useState([]);
     const [emailsListKey, setEmailsListKey] = useState(null);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState(20);
+    const [totalPages, setTotalPages] = useState(10);
+
     const updateCheckedItems = (data) => {
         setCheckedItems(data);
     }
@@ -109,12 +113,7 @@ export default function Category() {
                     setError(error);
                 }
             )
-    }, [category]);
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(20);
-    const [totalPages, setTotalPages] = useState(10);
-    const [disabled, setDisabled] = useState(false);
+    }, [category, limit]);
 
     const handleChange = useCallback(async (page, max = 20) => {
         setCurrentPage(page);
@@ -172,7 +171,6 @@ export default function Category() {
                                                 currentPage={currentPage}
                                                 boundaryCount={3}
                                                 totalPages={totalPages}
-                                                disabled={disabled}
                                                 onChange={handleChange}
                                             />
                                             <EmailsList
@@ -185,7 +183,6 @@ export default function Category() {
                                                 currentPage={currentPage}
                                                 boundaryCount={3}
                                                 totalPages={totalPages}
-                                                disabled={disabled}
                                                 onChange={handleChange}
                                             />
                                         </Group>

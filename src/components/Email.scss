@@ -39,7 +39,7 @@
     .email-sender__container {
       display: flex;
       align-items: center;
-      color: var(--primary-color);
+      color: var(--vkui--color_text_primary);
       max-width: 22%;
       min-width: 22%;
       padding-right: 8px;
@@ -78,7 +78,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 20px !important;
-      color: var(--secondary-color);
+      color: var(--vkui--color_text_secondary);
       flex: 1;
 
       .email-subject__container {
@@ -86,7 +86,7 @@
         white-space: nowrap;
 
         .email__subject {
-          color: var(--secondary-color);
+          color: var(--vkui--color_text_secondary);
           white-space: nowrap;
         }
       }
@@ -96,7 +96,7 @@
         display: inline;
 
         .email__body {
-          color: var(--secondary-color);
+          color: var(--vkui--color_text_secondary);
           white-space: nowrap;
         }
       }
@@ -116,7 +116,7 @@
       display: flex;
 
       .email__date {
-        color: var(--secondary-color);
+        color: var(--vkui--color_text_secondary);
         font-size: 13px;
         text-align: right;
         white-space: nowrap;
@@ -128,7 +128,7 @@
 
 .email-file__dropdown {
   .SimpleCell {
-    background-color: var(--background-color) !important;
+    background-color: var(--button_primary_background) !important;
     .SimpleCell__children {
       display: flex;
       & > :first-child {
